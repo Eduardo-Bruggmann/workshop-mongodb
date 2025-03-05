@@ -30,6 +30,17 @@ public class UserService {
 		return repo.insert(u);
 	}
 	
+	public User update(User u) {
+		User newUser = findById(u.getId());
+		updateData(newUser, u);
+		return repo.save(newUser);
+	}
+	
+	private void updateData(User newUser, User u) {
+		newUser.setName(u.getName());
+		newUser.setEmail(u.getEmail());
+	}
+	
 	public void delete(String id) {
 		findById(id);
 		repo.deleteById(id);
