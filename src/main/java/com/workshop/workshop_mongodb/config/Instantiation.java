@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.workshop.workshop_mongodb.domain.Post;
 import com.workshop.workshop_mongodb.domain.User;
+import com.workshop.workshop_mongodb.dto.AuthorDTO;
 import com.workshop.workshop_mongodb.repository.PostRepository;
 import com.workshop.workshop_mongodb.repository.UserRepository;
 
@@ -29,15 +30,17 @@ public class Instantiation implements CommandLineRunner {
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
 		userRepository.deleteAll();
+		postRepository.deleteAll();
 		
 		User u1 = new User(null, "Mock 1", "mock1@gmail.com");
 		User u2 = new User(null, "Mock 2", "mock2@gmail.com");
 		User u3 = new User(null, "Mock 3", "mock3@gmail.com");
-		
-		Post p1 = new Post(null, sdf.parse("06/03/2025"), "Title 1", "Body 1", u1);
-		Post p2 = new Post(null, sdf.parse("06/03/2025"), "Title 2", "Body 2", u1);
-		
+
 		userRepository.saveAll(Arrays.asList(u1, u2, u3));
+		
+		Post p1 = new Post(null, sdf.parse("06/03/2025"), "Title 1", "Body 1", new AuthorDTO(u1));
+		Post p2 = new Post(null, sdf.parse("06/03/2025"), "Title 2", "Body 2", new AuthorDTO(u1));
+		
 		postRepository.saveAll(Arrays.asList(p1, p2));
 	}
 
